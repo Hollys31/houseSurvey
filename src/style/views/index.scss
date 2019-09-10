@@ -1,0 +1,180 @@
+@import '../common/base.scss';
+@import '../common/icon.scss';
+.info-wrap {
+    width: 100vm;
+    height: vw(250);
+    position: relative;
+    background: url('./../../assets/listbg.png') top center no-repeat;
+    background-size: 100%;
+  }
+  .info-wrap .bg {
+    width: 100vw;
+    height: vw(250);
+  }
+  
+  .user-info {
+    width: 100vw;
+    height: vw(250);
+    padding: vw(70) vw(30);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 98;
+  }
+  
+  .user-info .headimg {
+    width: vw(100);
+    height: vw(100);
+    border-radius: 50%;
+    margin-right: vw(30);
+    overflow: hidden;
+    background: #efefef;
+  }
+  
+  .user-info .text {
+    width: vw(480);
+    height: vw(69);
+    padding-top:vw( 6);
+    font-size: vw(28);
+    color: #fff;
+    line-height: 1.8em;
+  }
+  
+  .user-info .icon {
+    color: #fff;
+    position: absolute;
+    top: vw(30);
+    right: vw(40);
+    font-size: vw(32);
+    z-index: 99;
+  }
+  
+  .audit-list {
+    width: vw(710);
+    margin: 0 auto;
+    position: relative;
+    margin-top: vw(-30);
+    padding-bottom: vw(100);
+  }
+  
+  .audit-list .item {
+    width: vw(710);
+    height: vw(300);
+    padding: 0 vw(30);
+    background: #fff;
+    border-radius: vw(15);
+    position: relative;
+    margin-bottom: vw(20);
+  }
+  
+  .audit-list .item .state-img {
+    width: vw(128);
+    height: vw(128);
+    position: absolute;
+    right: vw(30);
+    top: vw(120);
+  }
+  
+  .item .tit {
+    height: vw(80);
+    line-height: vw(80);
+    color: #3e9aff;
+    font-size: vw(28);
+    border-bottom: 1px solid #eee;
+  }
+  
+  .item .tit .house {
+    font-size: vw(46);
+    margin-right: vw(30);
+  }
+  
+  .item .tit .more {
+    color: #999;
+  }
+  
+  .item .info {
+    padding-top: vw(20);
+    color: #4a4a4a;
+  }
+  
+  .item .info span {
+    color: #999;
+  }
+  
+  .item .info .row {
+    width: 100%;
+    height: vw(60);
+    line-height: vw(60);
+    white-space: nowrap;
+    overflow-y: hidden;
+  }
+  
+  .addIcon {
+    width: vw(600);
+    height: vw(80);
+    line-height: vw(80);
+    text-align: center;
+    color: #f2fcfa;
+    box-shadow: 0px vw(9) vw(24) vw(5) rgba(15, 80, 150, 0.3);
+    border-radius: vw(40);
+    position: fixed;
+    bottom: vw(10);
+    left: vw(75);
+  }
+  
+  .modal-wrap {
+    display: none;
+  }
+  
+  .modal-wrap.show {
+    display: block;
+  }
+  
+  .modal-inner {
+    width: vw(576);
+    height: vw(351);
+    background: #f9f9f9;
+    border-radius: vw(20);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: vw(-175);
+    margin-left: vw(-288);
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  .modal-inner .tit {
+    height: vw(100);
+    line-height: vw(100);
+    font-size: vw(32);
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+  
+  .modal-inner .tel {
+    height: vw(160);
+    line-height: vw(160);
+    font-size: vw(40);
+    color: #fd5e6b;
+    text-align: center;
+  }
+  
+  .modal-inner .charge {
+    border-top: 1px solid #eee;
+    height: vw(90);
+    line-height: vw(90);
+    
+  }
+  
+  .modal-inner .charge span,.modal-inner .charge a {
+    display: inline-block;
+    width: 50%;
+    font-size: vw(28);
+    text-align: center;
+  }
+  
+  .modal-inner .charge .call {
+    color: #fff;
+  }
+  

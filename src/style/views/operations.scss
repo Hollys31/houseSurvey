@@ -1,0 +1,50 @@
+@import '../common/base.scss';
+.video-wrap {
+    width: 100%;
+    height: vw(437);
+    position: relative;
+    padding-bottom: vw(37);
+  }
+  
+  .video-wrap video {
+    width: 100%;
+    height: vw(416);
+  }
+  
+  .video-wrap image {
+    width: 100%;
+    height: vw(437);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+  }
+  .waring{
+    padding: vw(50) vw(40);
+    position: relative;
+    border-radius:vw(60) vw(60) 0 0;
+    margin-top:-vw(50);
+    background: #fff;
+    z-index: 999;
+    line-height: 1.8em;
+  }
+  .waring .tit{
+    font-size: vw(32);
+    font-weight: 500;
+  }
+  .waring .p{
+    text-indent: 2em;
+    margin: vw(30) 0px;
+  }
+  .waring .contact{
+    padding-left: 2em;
+    margin: vw(70) 0 vw(20);
+    line-height: 1.5em;
+  }
+  .waring .contact .tit{
+    font-size: vw(30);
+  }
+  .waring .contact text{
+    display: block;
+    margin-bottom: vw(15);
+  }

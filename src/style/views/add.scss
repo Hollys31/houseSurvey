@@ -1,0 +1,105 @@
+
+@import '../common/base.scss';
+@import '../common/icon.scss';
+@import '../views/login.scss';
+.yearPicker{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+}
+.form-wrap {
+    margin-bottom: vw(50);
+    padding-bottom: vw(60);
+  
+  }
+  
+  .form-wrap  .input-wrap {
+    width: vw(512);
+    height:vw(80);
+    line-height:vw(80);
+    color: #666;
+    float: left;
+    background: #f9f9f9;
+    border-radius: vw(40);
+    padding-left: vw(30);
+    overflow: hidden;
+  }
+  
+  .form-wrap picker, .form-wrap .picker {
+    min-width: vw(240);
+    height:vw(80);
+    line-height:vw(80);
+    display: inline-block;
+  }
+  
+  .form-wrap .year {
+    width: vw(512);
+  }
+  
+  .form-input {
+    margin-bottom: vw(20);
+  }
+  
+  .form-input input {
+    padding-left: vw(20);
+  }
+  
+  .form-wrap  .label {
+    margin-top: 0;
+    margin-bottom: vw(20);
+  }
+  
+  .form-upload .upload-box, .form-upload>div {
+    display: inline-block;
+    border: 1px dashed transparent;
+    text-align: center;
+    font-size: vw(24);
+    color: #ccc;
+    margin-bottom: vw(30);
+  }
+  
+  .form-upload .upload-box {
+    border: 1px dashed #efefef;
+  }
+  
+  .form-upload .upload-box, .form-upload>div{
+    width: vw(259);
+    height: vw(158);
+    display: block;
+    float: left;
+    margin: 0 vw(18) vw(15);
+    overflow: hidden;
+  }
+  
+  .form-upload .icon {
+    text-align: center;
+    margin: vw(18) auto;
+    font-size: vw(54);
+    display: block;
+  }
+  
+  .form-upload .img {
+    width: 100%;
+    height: 100%;
+  }
+  .form-upload .img-wrap{
+    position: relative;
+  }
+  .form-upload .img-wrap .icon {
+    font-size: vw(30);
+    position: absolute;
+    right: vw(7);
+    top: vw(-5);
+    color: #888;
+    z-index: 99;
+  }
+  .buttonIcon {
+    margin-top:vw(80);
+  }
+  
+  .buttonIcon.hide {
+    display: none;
+  }
+  
