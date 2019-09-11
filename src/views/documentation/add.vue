@@ -41,7 +41,7 @@
             <span class="icon iconfont icon-camera1"></span> 上传身份证正面
           </div>
           <div class="img-wrap" v-if="idCardFront">
-            <img class="img" :src="URL_BASE+''+idCardFront" />
+            <img class="img" :src="URL_BASE+''+idCardFront" @click="preViewImages(idCardFront)" />
             <span class="icon iconfont icon-close" @click="deleteImg('idCardFront')"></span>
           </div>
           <div class="upload-box" v-if="!idCardBack" @click="toUploadPhoto('idCardBack')">
@@ -58,7 +58,7 @@
           </div>
           <div class="img-wrap" v-if="idCardBack">
             <span class="icon iconfont icon-close" @click="deleteImg('idCardBack')"></span>
-            <img class="img" :src="URL_BASE+''+idCardBack" />
+            <img class="img" :src="URL_BASE+''+idCardBack" @click="preViewImages(idCardBack)" />
           </div>
         </div>
         <div class="label" :class="{'active':!(ownerRsid&&resid.length)}">请上传户口本照片</div>
@@ -76,13 +76,13 @@
             <span class="icon iconfont icon-camera1"></span>上传户主户口本照片
           </div>
           <div class="img-wrap" v-if="ownerRsid">
-            <img class="img" :src="URL_BASE+''+ownerRsid" />
+            <img class="img" :src="URL_BASE+''+ownerRsid" @click="preViewImages(ownerRsid)" />
             <span class="icon iconfont icon-close" @click="deleteImg('ownerRsid')"></span>
           </div>
           <!-- 户口成员 -->
 
           <div class="img-wrap" v-for="(item, index) in resid " v-bind:key="index">
-            <img class="img" :src="URL_BASE+''+item" />
+            <img class="img" :src="URL_BASE+''+item" @click="preViewImages(item)" />
             <span class="icon iconfont icon-close" @click="deleteImg('resid',index)"></span>
           </div>
 
@@ -101,7 +101,8 @@
       </div>
       <div class="buttonIcon mainBg" @click="submitToChecking">提交审核</div>
     </div>
-
+    <!-- 图片预览 -->
+    <Preview :previewSrc="previewSrc" @previewEvent="previewEvent"></Preview>
     <!-- 地址选择 -->
     <LocalAddress :isShow="addresShow" @addressEvent="addressEvent" />
     <!--  时间选择 -->
@@ -127,12 +128,14 @@
 import Modal from "@/components/modal";
 import Step from "@/components/step";
 import LocalAddress from "@/components/localAddress";
+import Preview from "@/components/previewImg";
 import form from "@/lib/form.js";
+import minify from "@/lib/compressFile.js";
 import util from "@/lib/util.js";
 import API from "@/lib/api.js";
 export default {
   name: "add",
-  components: { Modal, LocalAddress, Step },
+  components: { Modal, LocalAddress, Step, Preview },
   computed: {},
   created() {
     if (this.$route.params.type && this.$route.params.type == "addHouse") {
@@ -140,7 +143,7 @@ export default {
       this.showUploadImg = false;
       this.getInitUserInfo(); //初始化数据
     }
-    this.columns=util.getYear(30); 
+    this.columns = util.getYear(30);
   },
   data() {
     return {
@@ -161,10 +164,19 @@ export default {
       residenceImages: [], //户口本所有照片
       showUploadImg: true,
       columns: [],
-      noEmpty: false
+      noEmpty: false,
+      previewSrc: ""
     };
   },
   methods: {
+    preViewImages: function(url) {
+      //图片预览
+      this.previewSrc = this.URL_BASE + "" + url;
+    },
+    previewEvent: function() {
+      /*  关闭图片预览 */
+      this.previewSrc = "";
+    },
     getInitUserInfo() {
       const info = this.$store.state;
     },
@@ -174,7 +186,7 @@ export default {
     },
     onConfirm() {
       //确定选择时间
-      this.completeTime = this.pickerYear||this.columns[0];
+      this.completeTime = this.pickerYear || this.columns[0];
       this.closeModal("dateShow");
     },
     onCancel() {
@@ -198,19 +210,7 @@ export default {
     },
     getFileUrl(type, file) {
       //获取拍摄照片
-      const _this = this;
-      let formData = new FormData();
-      formData.append("file", file);
-      API.fileUpload(formData).then(res => {
-        const imgUrl = res.data.fileName;
-        if (type == "resid") {
-          let rsidList = _this[type];
-          rsidList.push(imgUrl);
-          _this[type] = rsidList;
-        } else {
-          _this[type] = imgUrl;
-        }
-      });
+      minify.blobToBase64(type, file, this);
     },
     deleteImg(type, ind) {
       //删除照片
@@ -253,13 +253,13 @@ export default {
         errCount = form.validParams(obj);
       }
       if (errCount == 0) {
-         obj = Object.assign( this.$store.state.userInfo,obj, this.address);
-          this.$store.commit('SWITCH_LOADING', true)
+        obj = Object.assign(this.$store.state.userInfo, obj, this.address);
+        this.$store.commit("SWITCH_LOADING", true);
         API.addInfo(obj).then(res => {
           if (res.status == 200) {
             this.$store.commit("getUserInfo", res.data);
             this.$router.push({ name: "auditing", params: { type: "add" } });
-             this.$store.commit('SWITCH_LOADING', false)
+            this.$store.commit("SWITCH_LOADING", false);
           }
         });
       } else {

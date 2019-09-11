@@ -1,22 +1,7 @@
 @import '../common/base.scss';
 @import '../common/icon.scss';
 
-.preview>span{
-  display: inline-block;
-  width: vw(50);
-  height: vw(50);;
-  position: fixed;
-  z-index: 9999;
-  right: vw(20);
-  top: vw(20);
-  font-size: vw(42);
-  color: #fff;
-}
-.preview img{
-    top:50%; /*左上角向下移动到外面div的高度的一半*/
-    position:absolute;
-    transform:translateY(-50%);
-}
+
 .info-wrap {
     width: vw(710);
     margin: 0 auto;

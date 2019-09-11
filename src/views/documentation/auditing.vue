@@ -56,17 +56,15 @@
       <router-link tag="a" :to="{name:'add',params:{type:'addHouse'}}" class="addHouse mainBg">新增房屋</router-link>
     </div>
     <!-- 图片预览 -->
-    <div class="modal-wrap preview" v-if="previewSrc">
-      <span class="icon iconfont icon-close" @click="closeModal"></span>
-      <img :src="previewSrc" />
-    </div>
+   <Preview :previewSrc="previewSrc" @previewEvent="previewEvent"></Preview>
   </div>
 </template> 
 <script>
 import Step from "@/components/step";
+import Preview from "@/components/previewImg";
 export default {
   name: "auditing",
-  components: { Step },
+  components: { Step,Preview },
   computed: {
     checkData() {
       switch (this.$route.params.type) {
@@ -97,13 +95,17 @@ export default {
     return {
       URL_BASE: this.$store.state.URL_BASE,
       noFirst: true,
-      previewSrc: ""
+      previewSrc: "",
     };
   },
   methods: {
     preViewImages: function(url) {
       //图片预览
       this.previewSrc = this.URL_BASE + "" + url;
+    },
+     previewEvent: function() {
+      /*  关闭图片预览 */
+      this.previewSrc = "";
     },
     closeModal: function() {
       this.previewSrc = "";

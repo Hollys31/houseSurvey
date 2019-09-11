@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="item">
-        <div class="l" >房屋地址</div>
+        <div class="l">房屋地址</div>
         <div class="r">
           <input
             class="input"
@@ -37,7 +37,7 @@
         </div>
       </div>
       <div class="item">
-        <div class="l" >竣工时间</div>
+        <div class="l">竣工时间</div>
         <div class="r">
           <input
             type="text"
@@ -64,7 +64,7 @@
           <span class="icon iconfont icon-camera1"></span> 上传身份证正面
         </div>
         <div class="img-wrap" v-if="idCardFront">
-          <img class="img" :src="URL_BASE+''+idCardFront" />
+          <img class="img" :src="URL_BASE+''+idCardFront" @click="preViewImages(idCardFront)"/>
           <span class="icon iconfont icon-close" @click="deleteImg('idCardFront')"></span>
         </div>
         <!-- 身份证反面 -->
@@ -80,14 +80,14 @@
           <span class="icon iconfont icon-camera1"></span> 上传身份证反面
         </div>
         <div class="img-wrap" v-if="idCardBack">
-          <img class="img" :src="URL_BASE+''+idCardBack" />
+          <img class="img" :src="URL_BASE+''+idCardBack" @click="preViewImages(idCardBack)"/>
           <span class="icon iconfont icon-close" @click="deleteImg('idCardBack')"></span>
         </div>
       </div>
       <div class="label" :class="{'active':(resid&&resid.length<2)}">户口本图集</div>
       <div class="form-upload clearfix">
         <div class="img-wrap" v-for="(item,index) in resid" v-bind:key="index">
-          <img class="img" :src="URL_BASE+''+item" />
+          <img class="img" :src="URL_BASE+''+item"  @click="preViewImages(item)"/>
           <span class="icon iconfont icon-close" @click="deleteImg('resid',index)"></span>
         </div>
         <div class="upload-box" @click="toUploadPhoto('resid')">
@@ -104,6 +104,8 @@
       </div>
       <div class="buttonIcon mainBg" @click="editHouseToChecking">完成</div>
     </div>
+    <!-- 图片预览 -->
+    <Preview :previewSrc="previewSrc" @previewEvent="previewEvent"></Preview>
     <!--  时间选择 -->
     <van-picker
       class="yearPicker"
@@ -120,12 +122,14 @@
 </template>
 <script>
 import LocalAddress from "@/components/localAddress";
+import Preview from "@/components/previewImg";
 import form from "@/lib/form.js";
+import minify from "@/lib/compressFile.js";
 import util from "@/lib/util.js";
 import API from "@/lib/api.js";
 export default {
   name: "edit",
-  components: { LocalAddress },
+  components: { LocalAddress, Preview },
   computed: {},
   watch: {},
   created() {
@@ -149,10 +153,19 @@ export default {
       canClick: true,
       dateShow: false, //时间选择器的显示
       columns: [],
-      noEmpty: false
+      noEmpty: false,
+      previewSrc:''
     };
   },
   methods: {
+    preViewImages: function(url) {
+      //图片预览
+      this.previewSrc = this.URL_BASE + "" + url;
+    },
+      previewEvent: function() {
+      /*  关闭图片预览 */
+      this.previewSrc ="";
+    },
     addressEvent() {
       //地址选择
       let params = arguments[0];
@@ -197,7 +210,7 @@ export default {
     },
     onConfirm() {
       //确定选择时间
-      this.completeTime = this.pickerYear||this.columns[0];
+      this.completeTime = this.pickerYear || this.columns[0];
       this.closeModal("dateShow");
     },
     onCancel() {
@@ -220,28 +233,13 @@ export default {
       const ele = this.$refs[type].click();
     },
     getFileUrl(type, file) {
-      //获取拍摄照片
-      const _this = this;
-      let formData = new FormData();
-      formData.append("file", file);
-      API.fileUpload(formData).then(res => {
-        const imgUrl = res.data.fileName;
-        let info = _this.info;
-        if (type == "resid") {
-          let rsidList = _this[type];
-          rsidList.push(imgUrl);
-          _this[type] = rsidList;
-        } else {
-          _this[type] = imgUrl;
-        }
-      });
+      minify.blobToBase64(type, file, this);
     },
     deleteImg(type, ind) {
       //删除照片
       if (ind || ind == 0) {
         let residImages = [];
         let currResidImages = this.resid;
-        console.log(currResidImages);
         currResidImages.map(function(item, index) {
           if (index != ind) {
             residImages.push(item);
@@ -266,10 +264,10 @@ export default {
       errCount = form.validParams(obj);
       obj = Object.assign(this.info, obj, this.address);
       if (errCount == 0) {
-         this.$store.commit('SWITCH_LOADING', true)
+        this.$store.commit("SWITCH_LOADING", true);
         API.updateInfo(obj).then(res => {
           if (res.status == 200) {
-            this.$store.commit('SWITCH_LOADING', false)
+            this.$store.commit("SWITCH_LOADING", false);
             this.$store.commit("getUserInfo", res.data);
             this.$router.push({ name: "auditing", params: { type: "add" } });
           }

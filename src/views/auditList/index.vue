@@ -46,7 +46,7 @@
         <div class="tel">{{phoneNumber}}</div>
         <div class="charge">
           <span class="mainColor" @click="closeModal">取消</span>
-          <a href="tel:34110045" class="call mainBg">拨打</a>
+          <a href="tel:07972022886" class="call mainBg">拨打</a>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ export default {
       currPage: 1,
       houseList: [],
       modalShow: false,
-      phoneNumber: "40087512225" //客服电话
+      phoneNumber: "07972022886" //客服电话
     };
   },
   methods: {
