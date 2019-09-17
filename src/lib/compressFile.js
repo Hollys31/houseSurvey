@@ -32,7 +32,7 @@ const minify = {
         reader.readAsDataURL(blob); // 添加二进制文件
         reader.onload = function (event) {
             const base64 = event.target.result; // 获取到它的base64文件
-            const scale = 0.85; // 设置缩放比例 （0-1）
+            const scale = 0.8; // 设置缩放比例 （0-1）
             self.compressImg(base64, scale, type, context,self.uploadImg); // 调用压缩方法
         };
     },
@@ -57,8 +57,8 @@ const minify = {
             // 转成base64 文件
             let base64 = canvas.toDataURL("image/jpeg");
             // 根据自己需求填写大小 我的目标是小于3兆
-            while (base64.length > 1024 * 1024 * 3) {
-                scale -= 0.02;
+            while (base64.length > 1024 * 1024 ) {
+                scale -= 0.7;
                 base64 = canvas.toDataURL("image/jpeg", scale);
             }
             // baser64 TO blob 这一块如果不懂可以自行百度，我就不加注释了
