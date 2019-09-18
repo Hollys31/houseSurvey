@@ -76,7 +76,7 @@ export default {
       const _this = this;
       let info = this.$store.state.userInfo;
       API.houselist({
-       token: info.token,
+        token: info.token,
         headName: info.headName,
         idCardNo: info.idCardNo,
         headPhone: info.headPhone,

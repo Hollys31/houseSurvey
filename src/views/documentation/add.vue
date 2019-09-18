@@ -138,6 +138,7 @@ export default {
   components: { Modal, LocalAddress, Step, Preview },
   computed: {},
   created() {
+    console.log(this.$store.state.userInfo);
     if (this.$route.params.type && this.$route.params.type == "addHouse") {
       //添加房屋
       this.showUploadImg = false;

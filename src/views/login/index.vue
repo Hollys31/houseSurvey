@@ -113,7 +113,7 @@ export default {
         API.login(params).then(res => {
           if (res.status == 999008) {
             //未注册
-            this.$store.commit("getUserInfo", _this.params);
+            this.$store.commit("getUserInfo",params);
             this.$router.push({ name: "add" });
           }
           if (res.status == 200) {
