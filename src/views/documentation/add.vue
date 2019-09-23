@@ -125,20 +125,20 @@
   </div>
 </template>
 <script>
-import Modal from "@/components/modal";
-import Step from "@/components/step";
-import LocalAddress from "@/components/localAddress";
-import Preview from "@/components/previewImg";
 import form from "@/lib/form.js";
 import minify from "@/lib/compressFile.js";
 import util from "@/lib/util.js";
 import API from "@/lib/api.js";
 export default {
   name: "add",
-  components: { Modal, LocalAddress, Step, Preview },
+  components: {
+    Modal: () => import("@/components/modal"),
+    LocalAddress: () => import("@/components/localAddress"),
+    Step: () => import("@/components/step"),
+    Preview: () => import("@/components/previewImg")
+  },
   computed: {},
   created() {
-    console.log(this.$store.state.userInfo);
     if (this.$route.params.type && this.$route.params.type == "addHouse") {
       //添加房屋
       this.showUploadImg = false;
